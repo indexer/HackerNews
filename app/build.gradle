@@ -1,0 +1,63 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    defaultConfig {
+        applicationId "com.indexer.hackernews"
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+            minifyEnabled true
+        }
+    }
+
+    flavorDimensions "production"
+
+    productFlavors {
+        staging {
+            compileSdkVersion 25
+            applicationId "com.indexer.hackernews"
+            dimension "production"
+            minSdkVersion 11
+            targetSdkVersion 25
+            versionNameSuffix "-minApiEleven"
+        }
+        production {
+            compileSdkVersion 27
+            applicationId "com.indexer.hackernews"
+            versionNameSuffix "-production"
+            dimension "production"
+            minSdkVersion 14
+            targetSdkVersion 27
+        }
+    }
+}
+
+
+
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    productionImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    productionImplementation 'com.android.support:appcompat-v7:27.1.1'
+    productionImplementation 'com.android.support.constraint:constraint-layout:1.1.1'
+    productionImplementation 'android.arch.lifecycle:extensions:1.1.1'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    stagingImplementation 'com.android.support:appcompat-v7:25.0.0'
+    stagingImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+
+}

@@ -8,10 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.indexer.hackernews.R
 
-class HackerNewsDashFragment : Fragment() {
+class HackerNewDashFragment : Fragment() {
 
     companion object {
-        fun newInstance() = HackerNewsDashFragment()
+        fun newInstance() = HackerNewDashFragment()
     }
 
     private lateinit var viewModel: HackerNewsDashViewModel

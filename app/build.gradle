@@ -8,10 +8,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     buildTypes {
         release {
+            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -24,9 +26,11 @@ android {
     flavorDimensions "production"
 
     productFlavors {
+
+
         staging {
             compileSdkVersion 25
-            applicationId "com.indexer.hackernews"
+            applicationId "com.indexer.hackernews.staging"
             dimension "production"
             minSdkVersion 11
             targetSdkVersion 25
@@ -34,12 +38,39 @@ android {
         }
         production {
             compileSdkVersion 27
-            applicationId "com.indexer.hackernews"
+            applicationId "com.indexer.hackernews.production"
             versionNameSuffix "-production"
             dimension "production"
             minSdkVersion 14
             targetSdkVersion 27
         }
+    }
+
+    sourceSets {
+
+        main {
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+            java.srcDirs = ['src/main/java']
+
+        }
+
+        production {
+            manifest.srcFile 'src/production/AndroidManifest.xml'
+            java.srcDirs = ['src/staging/java']
+
+        }
+
+        staging {
+            manifest.srcFile 'src/staging/AndroidManifest.xml'
+            java.srcDirs = ['src/staging/java']
+
+        }
+
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -48,16 +79,15 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    productionImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.android.support:multidex:1.0.3'
     productionImplementation 'com.android.support:appcompat-v7:27.1.1'
     productionImplementation 'com.android.support.constraint:constraint-layout:1.1.1'
     productionImplementation 'android.arch.lifecycle:extensions:1.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     stagingImplementation 'com.android.support:appcompat-v7:25.0.0'
     stagingImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-
+    productionImplementation 'com.android.support:support-v13:27.1.1'
 }
